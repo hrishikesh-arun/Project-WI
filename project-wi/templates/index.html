@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Identification Project</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #images { display: flex; justify-content: center; }
+        #images img { max-width: 45%; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Human-Wild Animal Conflict Prevention System</h1>
+    <div id="images">
+        <img id="capturedImage" src="" alt="Captured Image">
+        <img id="similarImage" src="" alt="Similar Image">
+    </div>
+    <p id="animalName">Identified Animal: Not Found</p>
+    <p id="accuracy">Accuracy: N/A</p>
+    <p id="frequencies">Frequencies: N/A</p>
+    <script>
+        // JavaScript to update the web page with the results
+        function updatePage(imageSrc, similarImageSrc, animal, accuracy, frequencies) {
+            document.getElementById('capturedImage').src = imageSrc;
+            document.getElementById('similarImage').src = similarImageSrc;
+            document.getElementById('animalName').innerText = `Identified Animal: ${animal}`;
+            document.getElementById('accuracy').innerText = `Prediction Accuracy: ${accuracy}`;
+            document.getElementById('frequencies').innerText = `Disturbing Frequencies: ${frequencies}`;
+        }
+    </script>
+</body>
+</html>
