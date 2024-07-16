@@ -3,7 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Identification Project</title>
+    <title>Human-Wild Animal Conflict Prevention System</title>
+    <meta http-equiv="refresh" content="5" />
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #images { display: flex; justify-content: center; }
+        #images img {width: 300px; height:300px; padding: 10px 25px;}
+    </style>
+</head>
+<body>
+    <h1>Human-Wild Animal Conflict Prevention System</h1>
+    <form id="uploadForm" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" onchange="this.form.submit()">
+        <input type="button" value="Reset" onclick="resetForm()">
+    </form>
+    {% if animal %}
+    <div id="results">
+        <h2>Results:</h2>
+        <div id="images">
+            <div>
+                <h3>Captured Image</h3>
+                <img src="{{ url_for('static', filename=captured_image_path) }}" alt="Captured Image">
+            </div>
+            <div>
+                <h3>Reference Image</h3>
+                <img src="{{ url_for('static', filename=reference_image_path) }}" alt="Similar Image">
+            </div>
+        </div>
+        <p id="animalName">Identified Animal: {{ animal }}</p>
+        <p id="accuracy">Accuracy: {{ accuracy }}</p>
+        <p id="frequencies">Frequency: {{ frequency }} Hz</p>
+    </div>
+    {% else %}
+    <p>No animal identified yet.</p>
+    {% endif %}
+
+    <script>
+        function resetForm() {
+            location.replace("/")
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human-Wild Animal Conflict Prevention System</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; }
         #images { display: flex; justify-content: center; }
@@ -12,22 +63,16 @@
 </head>
 <body>
     <h1>Human-Wild Animal Conflict Prevention System</h1>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*">
+        <input type="submit" value="Upload Image">
+    </form>
     <div id="images">
-        <img id="capturedImage" src="" alt="Captured Image">
+        <img id="capturedImage" src="{{ url_for('static', filename=image_path) }}" alt="Captured Image">
         <img id="similarImage" src="" alt="Similar Image">
     </div>
-    <p id="animalName">Identified Animal: Not Found</p>
-    <p id="accuracy">Accuracy: N/A</p>
-    <p id="frequencies">Frequencies: N/A</p>
-    <script>
-        // JavaScript to update the web page with the results
-        function updatePage(imageSrc, similarImageSrc, animal, accuracy, frequencies) {
-            document.getElementById('capturedImage').src = imageSrc;
-            document.getElementById('similarImage').src = similarImageSrc;
-            document.getElementById('animalName').innerText = `Identified Animal: ${animal}`;
-            document.getElementById('accuracy').innerText = `Prediction Accuracy: ${accuracy}`;
-            document.getElementById('frequencies').innerText = `Disturbing Frequencies: ${frequencies}`;
-        }
-    </script>
+    <p id="animalName">Identified Animal: {{ animal if animal else 'Not Found' }}</p>
+    <p id="accuracy">Accuracy: {{ accuracy if accuracy else 'N/A' }}</p>
+    <p id="frequencies">Frequencies: {{ frequency if frequency else 'N/A' }}</p>
 </body>
-</html>
+</html>-->
