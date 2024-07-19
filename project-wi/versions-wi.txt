@@ -1,6 +1,0 @@
-Project WI v1.0
-|-main.py v1.0
-|-index.html v1.0
-|-tester.py v1.0
-|-AppData
-  |-aiCode.py v1.0

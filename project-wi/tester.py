@@ -1,17 +1,63 @@
-# Project WI - webTester
-# v1.0
 # Web App Testing
 
 import requests,random
+import urllib.request
+from PIL import Image
+import configparser
 
-url = 'http://127.0.0.1:5000/upload'
+config = configparser.ConfigParser()
+# Read the configuration file
+config.read('config.ini')
 
-# Path to the image file
-image_path = f'test/test{random.randint(1,3)}.jpg'
+# SERVER data from config.ini
+HOST_ADDRESS = config.get("SERVER","HOST_IP") # Replace with actual IP
+HOST_PORT = config.get("SERVER","HOST_PORT")
+server_url = f"http://{HOST_ADDRESS}:{HOST_PORT}"
 
-# Open the image file
-with open(image_path, 'rb') as img_file:
-    files = {'file': img_file}
-    
-    # Send the image to the Flask server
-    response = requests.post(url, files=files)
+# Retrieving the resource located at the URL 
+# and storing it in the file name a.png 
+url = input("Enter Image URL: ")
+file_path = "test\\test"
+urllib.request.urlretrieve(url, file_path)
+# Placeholder image path
+image_path = file_path
+_dataReceived = False
+
+def capture_and_send_image():
+    with open(image_path, 'rb') as img_file:
+        files = {'file': img_file}
+        
+        response = requests.post(server_url+"/upload", files=files)
+        
+        if response.status_code == 200 or response.status_code == 302:
+            return True
+        else:
+            print(f"Error in POST request: {response.status_code} {response.text}")
+            return False
+
+def get_frequency():
+    response = requests.get(server_url+"/receive")
+    if response.status_code == 200:
+        data = response.json()
+        print(f"Response: {data}")
+        global _dataReceived
+        _dataReceived = True
+        return data.get("frequency", 0)
+    else:
+        print(f"Error in GET request: {response.status_code} {response.text}")
+        return 0
+
+def main_loop():
+    while not _dataReceived:
+        # Capture and send image
+        if capture_and_send_image():
+            # Get frequency from the server
+            frequency = get_frequency()
+            
+            if frequency > 0:
+                print(f"Playing frequency: {frequency} Hz")
+            else:
+                print("Frequency Data not given!! Playing Default Frequency!!")
+
+if __name__ == "__main__":
+    main_loop()

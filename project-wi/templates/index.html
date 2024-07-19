@@ -1,78 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Human-Wild Animal Conflict Prevention System</title>
-    <meta http-equiv="refresh" content="5" />
+    <title>Sonic Safe</title>
+    <meta http-equiv="refresh" content="3" />
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        #images { display: flex; justify-content: center; }
-        #images img {width: 300px; height:300px; padding: 10px 25px;}
+        body {
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-family: "Red Hat Display", sans-serif;
+            background: url('https://4kwallpapers.com/images/wallpapers/macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-2880x1800-1455.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+        }
+        #images {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        #images img {
+            width: 300px;
+            height: 300px;
+            margin: 10px;
+            border: 5px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #images img:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
+        }
+        h1 {
+            font-size: 3.5em;
+            text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.7);
+            color: rgb(0, 0, 0); /* Changed to black */
+            margin: 0;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 8px;
+        }
+        h2 {
+            margin: 20px 0;
+            font-size: 2.5em;
+            color: rgb(255, 255, 255);
+            text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);
+        }
+        h3 {
+            margin: 20px 0;
+            font-size: 2em;
+            color: rgb(255, 255, 255);
+        }
+        h5 {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-style: italic;
+            font-size: 1em;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+            margin: 0;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        h5:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        #uploadForm {
+            margin: 20px 0;
+        }
+        #uploadForm input {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #0872fc;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        #uploadForm input:hover {
+            background-color: #c62828;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
-    <h1>Human-Wild Animal Conflict Prevention System</h1>
-    <form id="uploadForm" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" onchange="this.form.submit()">
-        <input type="button" value="Reset" onclick="resetForm()">
-    </form>
+    <h1>SONIC SAFE</h1>
+    <h2>Human-Wild Animal Conflict Prevention System</h2>
+    
     {% if animal %}
     <div id="results">
-        <h2>Results:</h2>
+        <h3>Results:</h3>
         <div id="images">
             <div>
-                <h3>Captured Image</h3>
+                <h4>Captured Image</h4>
                 <img src="{{ url_for('static', filename=captured_image_path) }}" alt="Captured Image">
             </div>
             <div>
-                <h3>Reference Image</h3>
-                <img src="{{ url_for('static', filename=reference_image_path) }}" alt="Similar Image">
+                <h4>Reference Image</h4>
+                <img src="{{ url_for('static', filename=reference_image_path) }}" alt="Reference Image">
             </div>
         </div>
         <p id="animalName">Identified Animal: {{ animal }}</p>
-        <p id="accuracy">Accuracy: {{ accuracy }}</p>
+        <p id="location">Location: Sector {{ location }}</p>
+        <p id="probability">Prediction Probability: {{ probability }} %</p>
         <p id="frequencies">Frequency: {{ frequency }} Hz</p>
     </div>
     {% else %}
-    <p>No animal identified yet.</p>
+    <p><br>No animal identified yet.<br></p>
     {% endif %}
-
+    
+    <form id="uploadForm" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="button" value="Reset Page" onclick="resetForm()">
+    </form>
+    
+    <h5>Developed by students of <b><i>Sarvodaya Vidyalaya</i></b></h5>
+    
     <script>
         function resetForm() {
-            location.replace("/")
+            location.replace("/");
         }
     </script>
 </body>
 </html>
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Human-Wild Animal Conflict Prevention System</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        #images { display: flex; justify-content: center; }
-        #images img { max-width: 45%; margin: 10px; }
-    </style>
-</head>
-<body>
-    <h1>Human-Wild Animal Conflict Prevention System</h1>
-    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*">
-        <input type="submit" value="Upload Image">
-    </form>
-    <div id="images">
-        <img id="capturedImage" src="{{ url_for('static', filename=image_path) }}" alt="Captured Image">
-        <img id="similarImage" src="" alt="Similar Image">
-    </div>
-    <p id="animalName">Identified Animal: {{ animal if animal else 'Not Found' }}</p>
-    <p id="accuracy">Accuracy: {{ accuracy if accuracy else 'N/A' }}</p>
-    <p id="frequencies">Frequencies: {{ frequency if frequency else 'N/A' }}</p>
-</body>
-</html>-->

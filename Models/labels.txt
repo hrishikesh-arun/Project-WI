@@ -1,0 +1,5 @@
+0 Leopard
+1 Tiger
+2 Bear
+3 Lion
+4 Antelope

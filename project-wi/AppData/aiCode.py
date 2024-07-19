@@ -1,12 +1,6 @@
-# Project WI - AppData.aiCode
-# v1.0
-# Contains the Identifier AI
-
 #Import Libraries
 import tensorflow as tf
-import matplotlib.pyplot as plt
 import numpy as np
-from keras.preprocessing import image # type: ignore
 from keras.applications import imagenet_utils # type: ignore
 
 # Load model
@@ -21,24 +15,17 @@ def identify_animal(image):
     # Predict
     predictions = model.predict(final_image)
     # Decode and Classify
-    results = imagenet_utils.decode_predictions(predictions,top=3)
+    results = imagenet_utils.decode_predictions(predictions,top=5)
     print(results)
-    print(fiveTypeClassifier(results[0][0][1]))
-    return [results[0][0][1],fiveTypeClassifier(results[0][0][1]),results[0][0][2]]
+    print(typeClassifier(results[0][0][1]))
+    return [results[0][0][1],typeClassifier(results[0][0][1]),results[0][0][2]]
 
-def fiveTypeClassifier(animal):
+def typeClassifier(animal):
     animal= animal.casefold()
-    detectableAnimals = ['elephant','tiger','crocodile','boar','human poachers']
-    keywords = ['elephant','tiger','crocodile','boar','man']
-    if "elephant" in animal:
-        return detectableAnimals[0]
-    elif "tiger" in animal:
-        return detectableAnimals[1]
-    elif "crocodile" in animal:
-        return detectableAnimals[2]
-    elif "boar" in animal:
-        return detectableAnimals[3]
-    elif "man" in animal:
-        return detectableAnimals[4]
-    else:
-        return "unidentified"
+    detectableAnimals = ['elephant','tiger','crocodile','boar','bear','lion','human']
+    keywords = ['eleph','tiger','croc','boar','bear','lion','man'] # Words to search
+    detectables = list(zip(detectableAnimals,keywords))
+    for i in range(len(detectables)):
+        if detectables[i][1] in animal:
+            return detectables[i][0]
+    return "unidentified"
