@@ -1,7 +1,7 @@
 # Web App Testing
 
 import requests,random
-import urllib.request
+#import urllib.request
 from PIL import Image
 import configparser
 
@@ -10,15 +10,12 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # SERVER data from config.ini
-HOST_ADDRESS = config.get("SERVER","HOST_IP") # Replace with actual IP
+HOST_ADDRESS = config.get("SERVER","HOST_IP")
 HOST_PORT = config.get("SERVER","HOST_PORT")
 server_url = f"http://{HOST_ADDRESS}:{HOST_PORT}"
 
-# Retrieving the resource located at the URL 
-# and storing it in the file name a.png 
-url = input("Enter Image URL: ")
-file_path = "test\\test"
-urllib.request.urlretrieve(url, file_path)
+
+file_path = "test\\"+input("Enter File Name (With extension): ")
 # Placeholder image path
 image_path = file_path
 _dataReceived = False
